@@ -3,10 +3,7 @@ package cursojava.notasvolatiles.controllers;
 import java.time.LocalDateTime;
 import java.util.Random;
 
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.boot.SessionFactoryBuilder;
-import org.springframework.data.jpa.provider.HibernateUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,10 +12,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import cursojava.notasvolatiles.models.Nota;
+import cursojava.notasvolatiles.repositories.NotaRepository;
 
 @Controller
 public class NotaController {
-    
+
+    @Autowired
+    private NotaRepository notaRepository;
 
     @GetMapping("/")
     public String mostrarFormularioCrearNota() {
@@ -37,30 +37,38 @@ public class NotaController {
         nota.setClave(randomCode);
 
         // Persistencia del objeto
-        
-
-
-        // EntityTransaction transaction = entityManager.getTransaction();
-        // transaction.begin();
-        // entityManager.persist(nota);
-        // transaction.commit();
-
-
+        notaRepository.save(nota);
 
         model.addAttribute("mensaje", "Nota creada");
-        model.addAttribute("url", "http://localhost:8080/nota/123456788990");
+        model.addAttribute("url", "http://localhost:8080/nota/" + randomCode);
         return "aviso";
     }
 
     @GetMapping("/nota/{clave}")
-    public String verPreambuloNota(@PathVariable String clave) {
+    public String verPreambuloNota(@PathVariable String clave, Model model) {
         // Lógica para ver el preámbulo de una nota
-        return "preambulo";
+        Nota nota = notaRepository.findById(clave).orElse(null);
+        if (nota != null) {
+            model.addAttribute("nota", nota);
+            return "preambulo";
+        } else {
+            return "notfound";
+        }
     }
 
     @PostMapping("/nota/{clave}")
-    public String verNotaYEliminar(@PathVariable String clave) {
+    public String verNotaYEliminar(@PathVariable String clave, Model model) {
         // Lógica para ver y eliminar una nota
-        return "nota";
+        Nota nota = notaRepository.findById(clave).orElse(null);
+        if (nota != null) {
+            // Cargamos la nota en la plantilla de la vista
+            model.addAttribute("nota", nota);
+            // Eliminamos la nota de la base de datos
+            notaRepository.deleteById(clave);
+            return "nota";
+        } else {
+            // Si no se encontró la nota, dirigimos a una página de error
+            return "notfound";
+        }
     }
 }

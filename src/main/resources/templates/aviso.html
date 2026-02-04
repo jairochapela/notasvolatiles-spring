@@ -1,13 +1,32 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<head th:replace="~{ base :: basehead(~{::title}) }">
+    <title>Nota creada</title>
 </head>
-<body>
-    <h1 th:text="${mensaje}"></h1>
+<body th:replace="~{ base :: basebody(~{::main}) }">
+    <main class="container-fluid">
+        <h1 th:text="${mensaje}"></h1>
+        <input type="text" id="myInput" th:value="${url}" class="form-control" readonly />
 
-    <code th:text="${url}"></code>
+        <button class="btn btn-primary" onclick="myFunction()">Copiar URL</button>
+
+        <script>
+        function myFunction() {
+            // Get the text field
+            var copyText = document.getElementById("myInput");
+
+            // Select the text field
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); // For mobile devices
+
+            // Copy the text inside the text field
+            navigator.clipboard.writeText(copyText.value);
+
+            // Alert the copied text
+            alert("URL copiada en el portapapeles");
+        }        
+        </script>        
+    </main>
+
 </body>
 </html>

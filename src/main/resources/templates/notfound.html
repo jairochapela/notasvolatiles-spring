@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{ base :: basehead(~{::title}) }">
+    <title>Nota no encontrada</title>
 </head>
-<body>
-    <h1>¡Nota no encontrada!</h1>
+<body th:replace="~{ base :: basebody(~{::main}) }">
+    <main class="container-fluid">
+        <h1>¡Nota no encontrada!</h1>
+    </main>
 </body>
 </html>

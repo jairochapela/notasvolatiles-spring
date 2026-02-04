@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<head th:replace="~{ base :: basehead(~{::title}) }">
+    <title>Crear nueva nota</title>
 </head>
-<body>
-    <h1>Crear nueva nota</h1>
-
-    <form th:action="@{/}" method="post">
-        <label for="titulo">Título:</label>
-        <input type="text" id="titulo" name="titulo" required>
-        <br><br>
-        <label for="mensaje">Mensaje:</label>
-        <br>
-        <textarea id="mensaje" name="mensaje" rows="10" cols="30" required></textarea>
-        <br><br>
-        <button type="submit">Crear Nota</button>
-    </form>
+<body th:replace="~{ base :: basebody(~{::main}) }">
+    <main class="container-fluid">
+        <h1>Crear nueva nota</h1>
+        <form th:action="@{/}" method="post">
+            <label for="titulo">Título:</label>
+            <input type="text" id="titulo" name="titulo" required>
+            <br><br>
+            <label for="mensaje">Mensaje:</label>
+            <br>
+            <textarea id="mensaje" name="mensaje" rows="10" cols="30" required></textarea>
+            <br><br>
+            <button type="submit" class="btn btn-primary">Crear Nota</button>
+        </form>
+    </main>
 </body>
 </html>

@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<head th:replace="~{ base :: basehead(~{::title}) }">
+    <title th:text="${nota.titulo}"></title>
 </head>
-<body>
-    <h1>Tienes una nota:</h1>
-    <main>
+<body th:replace="~{ base :: basebody(~{::main}) }">
+    <main class="container-fluid">
+        <h1>Tienes una nota:</h1>
         <h2 th:text="${nota.titulo}"></h2>
 
         <form action="" method="post">
-            <button type="submit">Visualizar Nota</button>
+            <button class="btn btn-primary" type="submit">Visualizar Nota</button>
         </form>
     </main>
 </body>

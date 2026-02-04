@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="~{ base :: basehead(~{::title}) }">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title th:text="${nota.titulo}"></title>
 </head>
-<body>
-    <h1 th:text="${nota.titulo}"></h1>
-    <main th:text="${nota.mensaje}"></main>
+<body th:replace="~{ base :: basebody(~{::main}) }">
+    <main class="container-fluid">
+        <h1 th:text="${nota.titulo}"></h1>
+        <article th:text="${nota.mensaje}"></article>
+    </main>
 </body>
 </html>

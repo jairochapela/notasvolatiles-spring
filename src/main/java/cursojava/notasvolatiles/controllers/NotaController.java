@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,10 @@ public class NotaController {
 
     @Autowired
     private NotaRepository notaRepository;
+
+    @Value("${server.baseUrl}")
+    private String baseUrl;
+
 
     @GetMapping("/")
     public String mostrarFormularioCrearNota() {
@@ -40,7 +45,7 @@ public class NotaController {
         notaRepository.save(nota);
 
         model.addAttribute("mensaje", "Nota creada");
-        model.addAttribute("url", "http://localhost:8080/nota/" + randomCode);
+        model.addAttribute("url", baseUrl + "/nota/" + randomCode);
         return "aviso";
     }
 
